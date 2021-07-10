@@ -6,21 +6,21 @@ const indexedDB =
   window.mozIndexedDB;
 
 let db;
-const request = indexedDB.open('BudgetStore', 1);
+const request = indexedDB.open('budget', 1);
 
-request.onsuccess = event => {
+request.onsuccess = (event) => {
     db = event.target.result;
     if (navigator.onLine) {
-        checkDatabase();
+        checkLiveDatabase();
     }
 };
 
-request.onupgradeneeded = event => {
+request.onupgradeneeded = (event) => {
     const db = event.target.result;
     db.createObjectStore('BudgetStore', { autoIncrement: true });
 };
 
-request.onerror = event => {
+request.onerror = (event) => {
     console.log('Error:: ' + event.target.errorCode);
 };
 
@@ -30,3 +30,29 @@ const saveRecord = (record) => {
     store.add(record);
 };
 
+const checkLiveDatabase = () => {
+    const transaction = db.transaction(['BudgetStore'], 'readwrite');
+    const store = transaction.objectStore('BudgetStore');
+    const getAll = store.getAll();
+
+    getAll.onsuccess = () => {
+        if (getAll.result.length > 0) {
+            fetch('api/transaction/bulk', {
+                method: 'POST',
+                body: JSON.stringify(getAll.result),
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(() => {
+                const transaction = db.transaction(['BudgetStore'], 'readwrite');
+                const store = transaction.objectStore('BudgetStore');
+                store.clear();
+            });
+        } 
+    }
+};
+
+window.addEventListener('online', checkLiveDatabase);
