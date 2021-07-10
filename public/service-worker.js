@@ -1,14 +1,18 @@
+const CACHE_NAME = 'static-cache';
+const DATA_CACHE_NAME = 'data-cache';
+const FILES_TO_CACHE = [
+    './',
+    './index.html',
+    './styles.css',
+    './icons/icon-192x192.png',
+    './icons/icon-512x512.png',
+];
+
 // install event handler
 self.addEventListener('install', event => {
     event.waitUntil(
-      caches.open('static').then( cache => {
-        return cache.addAll([
-          './',
-          './index.html',
-          './styles.css',
-          './icons/icon-192x192.png',
-          './icons/icon-512x512.png'
-        ]);
+      caches.open(CACHE_NAME).then( cache => {
+        return cache.addAll(FILES_TO_CACHE);
       })
     );
     console.log('Install');
