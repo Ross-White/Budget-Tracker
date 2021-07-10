@@ -2,7 +2,7 @@ const CACHE_NAME = 'static-cache';
 const DATA_CACHE_NAME = 'data-cache';
 const FILES_TO_CACHE = [
     './',
-    './index.html',
+    './manifest.webmanifest',
     './styles.css',
     './icons/icon-192x192.png',
     './icons/icon-512x512.png',
@@ -19,7 +19,7 @@ self.addEventListener('install', event => {
     self.skipWaiting();
   });
 
-  // retrieve assets from cache
+// retrieve assets from cache
 self.addEventListener('fetch', event => {
     event.respondWith(
       caches.match(event.request).then( response => {
