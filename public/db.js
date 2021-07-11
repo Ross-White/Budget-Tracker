@@ -6,7 +6,7 @@ const indexedDB =
   window.mozIndexedDB;
 
 let db;
-const request = indexedDB.open('budget', 1);
+const request = indexedDB.open('BudgetStore', 1);
 
 request.onsuccess = (event) => {
     db = event.target.result;
@@ -16,7 +16,7 @@ request.onsuccess = (event) => {
 };
 
 request.onupgradeneeded = (event) => {
-    const db = event.target.result;
+    db = event.target.result;
     db.createObjectStore('BudgetStore', { autoIncrement: true });
 };
 
@@ -47,9 +47,9 @@ const checkLiveDatabase = () => {
             })
             .then(response => response.json())
             .then(() => {
-                const transaction = db.transaction(['BudgetStore'], 'readwrite');
-                const store = transaction.objectStore('BudgetStore');
-                store.clear();
+                transaction = db.transaction(['BudgetStore'], 'readwrite');
+                const currrentStore = transaction.objectStore('BudgetStore');
+                currrentStore.clear();
             });
         } 
     }
