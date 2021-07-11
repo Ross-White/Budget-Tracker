@@ -2,7 +2,7 @@
 
 In this assignment, I have created a budget tracking PWA. I was gives starter code for the app, including the front-end, database and server. My task was to turn the app into a PWA by including a web manifest, service worker, and indexedDB.
 
-[Link to deployed app](https://https://budget-tracker-rw.herokuapp.com/)
+[Link to deployed app](https://budget-tracker-rw.herokuapp.com/)
 
 ## Table of Contents
 * [Description](#description)
@@ -30,8 +30,8 @@ The backend functionality of the app comes from Node.js, Express, MongoDB and Mo
 
 ## Contributions
 
-* Front end provided by Trilogy Education Services.
-* Back end built by Ross White.
+* Starter code built by Trilogy Education Services.
+* Refactored into a PWA, and for offline functionality by Ross White.
 
 ## Contact
 
